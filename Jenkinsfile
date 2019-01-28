@@ -1,17 +1,24 @@
-pipeline {
-    agent any
-    tools {
-        maven 'apache-maven-3.6.0'
-        jdk 'jdk8'
-    }
-    stages {
-        stage('Build') {
-            steps {
-                sh 'printenv'
-                withMaven(mavenSettingsConfig: 'maven-settings-global') {
-                    sh 'mvn clean package'
-                }
-            }
-        }     
-    }    
-}
+ stages {
+         stage('compile') {
+             steps {
+                 withMaven(maven : 'maven-3.6.0') {
+                    sh 'mvn compile'
+                 }
+
+             }
+         }
+         stage('test') {
+             steps {
+                 withMaven(maven : 'maven-3.6.0') {
+                    sh 'mvn test'
+                 }
+             }
+         }
+         stage('packege') {
+             steps {
+                 withMaven(maven : 'maven-3.6.0') {
+                    sh 'mvn packege'
+                 }
+
+             }
+         }
