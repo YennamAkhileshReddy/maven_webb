@@ -1,23 +1,17 @@
 pipeline {
-     agent { label 'master' }
-     stages {
-         stage('compile') {
-             steps {
-                    sh 'mvn compile'
-
-             }
-         }
-         stage('test') {
-             steps {
-                    sh 'mvn test'
-             }
-         }
-         stage('packege') {
-             steps {
-                    sh 'mvn packege'
-                 
-             }
-         }
-         
-     }  
+    agent any
+    tools {
+        maven 'apache-maven-3.6.0'
+        jdk 'jdk8'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'printenv'
+                withMaven(mavenSettingsConfig: 'maven-settings-global') {
+                    sh 'mvn clean package'
+                }
+            }
+        }     
+    }    
 }
